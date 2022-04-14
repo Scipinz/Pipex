@@ -6,7 +6,7 @@
 #    By: kblok <kblok@student.codam.nl>               +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/11/16 20:46:21 by kblok         #+#    #+#                  #
-#    Updated: 2022/03/24 16:25:30 by kblok         ########   odam.nl          #
+#    Updated: 2022/04/14 13:17:08 by kblok         ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,14 @@ CFLAGS	= 	-Wall -Werror -Wextra -c
 INCL	=	-Ilibft
 RM		=	rm -rf
 AR		=	ar rcs
-MKDIR	= 	mkdir -p obj
+PIPEX	= 	.
+LIBFT	= 	libft/
+HEADERS	= 	-I $(LIBFT) -I $(PIPEX)
 
 #==============================================================================: Source files 
-SRCS	=	pipex.c
+SRCS	=	pipex.c \
+			parsing.c \
+			main.c
 
 #==============================================================================: Color codes
 GREEN		= \033[1;32m
@@ -34,18 +38,16 @@ BLUE		= \033[1;34m
 MAGENTA		= \033[1;35m
 RESET		= \033[0m
 
-all: dirs message $(NAME)
+all: message $(NAME)
 
 run:
 	@./$(NAME) $(ARGS)
 
 #==============================================================================: Compile project
 $(NAME): $(OBJ)
-	@$(AR) $(NAME) $(OBJ)
+	@$(MAKE) -C libft
+	@$(CC) $(OBJ) $(HEADERS) $(LIBFT)/libft.a -o $(NAME)
 	@echo "$(GREEN)✅Done compiling $(NAME)$(RESET)"
-
-dirs:
-	@$(MKDIR)
 
 message:
 	@echo "$(BLUE)🔨Creating object folder$(RESET)"
@@ -60,13 +62,15 @@ endif
 #==============================================================================: Remove object files and folder
 clean:
 	@$(RM) obj/
+	@$(MAKE) clean -C libft
 	@echo "$(RED)🧹Cleaned object folders!$(RESET)"
 
 #==============================================================================: Remove object files, folder and lib files/executables
 fclean: clean
-	@$(RM) $(NAME) *.out
+	@$(RM) $(NAME)
+	@$(MAKE) fclean -C libft
 	@echo "$(RED)🧹Cleaned $(NAME)!$(RESET)"
 
 re: fclean all
 
-.PHONY: all clean fclean re dirs message
+.PHONY: all clean fclean re message
