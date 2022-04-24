@@ -6,7 +6,7 @@
 /*   By: kblok <kblok@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/23 18:19:22 by kblok         #+#    #+#                 */
-/*   Updated: 2022/04/21 14:57:27 by kblok         ########   odam.nl         */
+/*   Updated: 2022/04/21 18:51:27 by kblok         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	child(t_vars vars, int argc, char *argv, char **envp)
 {
-	char	**cmd;
-
 	vars.i = 0;
-	cmd = ft_split(argv, ' ');
+	vars.cmd = ft_split(argv, ' ');
+	if (access(vars.cmd[0], X_OK) == 0)
+		execve(vars.cmd[0], vars.cmd, envp);
 	while (vars.path[vars.i])
 	{
-		if (access(ft_strjoin(vars.path[vars.i], cmd[0]), X_OK) == 0)
-			execve(ft_strjoin(vars.path[vars.i], cmd[0]), cmd, envp);
+		if (access(ft_strjoin(vars.path[vars.i], vars.cmd[0]), X_OK) == 0)
+			execve(ft_strjoin(vars.path[vars.i], vars.cmd[0]), vars.cmd, envp);
 		vars.i++;
 	}
 	exit(127);

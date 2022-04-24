@@ -6,7 +6,7 @@
 /*   By: kblok <kblok@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/23 18:39:58 by kblok         #+#    #+#                 */
-/*   Updated: 2022/04/21 15:00:24 by kblok         ########   odam.nl         */
+/*   Updated: 2022/04/21 15:10:13 by kblok         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_vars
 	int		f2;
 	int		i;
 	char	**path;
+	char	**cmd;
 	int		end[2];
 	pid_t	child_process;
 }	t_vars;

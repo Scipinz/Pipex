@@ -6,7 +6,7 @@
 /*   By: kblok <kblok@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/13 15:23:48 by kblok         #+#    #+#                 */
-/*   Updated: 2022/04/21 14:58:58 by kblok         ########   odam.nl         */
+/*   Updated: 2022/04/21 18:51:25 by kblok         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	main(int argc, char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	if (!files(argc, argv, &vars.f1, &vars.f2))
 		return (1);
-	if (access(*argv, X_OK) == 0)
-		execve(*vars.path, &argv[vars.i], envp);
 	vars.path = parser(envp, vars);
 	pipex(vars, argc, argv, envp);
 	close(vars.f1);
